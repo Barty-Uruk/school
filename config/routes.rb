@@ -6,7 +6,5 @@ Rails.application.routes.draw do
   get "/home/about"  => "home#about", as: "about"
 
   get '/courses/index'  => 'courses#index', as: 'allcourses'
-  resources :courses
-  resources :lessons
-  resources :user_doc
+  resources :courses, :statuses, :lessons, :user_doc
 end

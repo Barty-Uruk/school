@@ -2,27 +2,44 @@
 <div class="alert alert-primary" ><%= @lesson.title %>
   <br>
    </div>
+   <div align="center" class="bg-light">
+         <br>
+ <% @lesson.docs.each do |doc| %>
+   <%= link_to "Cкачать задание к уроку", doc.file.url, download: '', :class=> "btn btn-sm btn-outline-secondary" %>
+ <% end %>
+ <br>
+ <%# <%= select_tag(:status, options_for_select([['В процессе выполнения', 1], ['На проверке', 2]])) %>
+
+ <%= form_for :status, url: statuses_path do |f| %>
+   <%=  f.hidden_field :lesson, :value => @lesson.id %>
+   <% if @status.nil? || @status.status == 1 %>
+     <%= f.submit "Отправить на проверку", :class=> "btn btn-sm btn-outline-secondary" %>
+   <% else %>
+     <%= f.submit "Cнять с проверки", :class=> "btn btn-sm btn-outline-secondary" %>
+   <% end %>
+ <% end %>
+ <h3> Твои файлы к этому уроку </h3>
+ <% if !@files.nil? %>
+ <% @files.order(:id).each do |file| %>
+   <%= link_to file.file_identifier, file.file.url, download: '', :class=> "" %>
+ <br>
+ <% end %>
+ <% end %>
+ <%= form_for :doc, url: user_doc_index_path do |f| %>
+     <%=  f.hidden_field :lesson_id, :value => @lesson.id %>
+     <br>
+          <div> Загрузить выполненное задание</div>
+       <%= f.file_field :file %>
+         <%= f.submit "сохранить", :class=> "btn btn-sm btn-outline-secondary" %>
+         <br>
+           <% if !@states.nil? %>
+         Оценка за урок: <%= @states.value %>
+
+           <% end %>
+           <br>
+  </div>
   <%= @lesson.description.html_safe %>
   <br>
 
-  <div align="center" class="bg-light">
-        <br>
-<% @lesson.docs.each do |doc| %>
 
-
-  <%= link_to "Cкачать задание к уроку", doc.file.url, download: '', :class=> "btn btn-sm btn-outline-secondary" %>
-<% end %>
-<%= form_for :doc, url: user_doc_index_path do |f| %>
-    <%=  f.hidden_field :lesson_id, :value => @lesson.id %>
-    <br>
-         <div> Загрузить выполненное задание</div>
-      <%= f.file_field :file %>
-        <%= f.submit "сохранить", :class=> "btn btn-sm btn-outline-secondary" %>
-        <br>
-          <% if !@states.nil? %>
-        Оценка за урок: <%= @states.value %>
-
-          <% end %>
-          <br>
- </div>
 <% end %>
