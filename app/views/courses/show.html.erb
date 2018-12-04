@@ -1,0 +1,35 @@
+<html lang="en">
+  <div class="alert alert-primary"><h1 align="center" class="display-4"><%= @course.title %><h1></div>
+    <main role="main">
+      <div class="album py-5 bg-light" height="100px">
+
+        <div class="container" >
+              <div class="row">
+                    <% @course.lessons.order(:id).each do |lesson| %>
+                <div class="col-md-4">
+                  <div align="center"  class="card2 mb-4 shadow-sm">
+                    <p >
+                      <%= lesson.title %>
+                    </p>
+                    <div >
+                      <div class="d-flex justify-content-between align-items-center">
+                              <%= link_to "Открыть урок", lesson_path(lesson), :class=> "btn btn-sm btn-outline-secondary" %>
+                              <% if !lesson.states.empty? %>
+                                 оценка:<% lesson.states.each do |state| %>
+                                <%= state.value %>
+                                <% end %>
+                                <% else %>
+                                оценки пока нет
+                                <% end %>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+          <% end %>
+
+    </main>
+
+    <footer class="text-muted">
+    </footer>

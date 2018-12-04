@@ -1,0 +1,28 @@
+
+<div class="alert alert-primary" ><%= @lesson.title %>
+  <br>
+   </div>
+  <%= @lesson.description.html_safe %>
+  <br>
+
+  <div align="center" class="bg-light">
+        <br>
+<% @lesson.docs.each do |doc| %>
+
+
+  <%= link_to "Cкачать задание к уроку", doc.file.url, download: '', :class=> "btn btn-sm btn-outline-secondary" %>
+<% end %>
+<%= form_for :doc, url: user_doc_index_path do |f| %>
+    <%=  f.hidden_field :lesson_id, :value => @lesson.id %>
+    <br>
+         <div> Загрузить выполненное задание</div>
+      <%= f.file_field :file %>
+        <%= f.submit "сохранить", :class=> "btn btn-sm btn-outline-secondary" %>
+        <br>
+          <% if !@states.nil? %>
+        Твоя оценка за урок: <%= @states.value %>
+
+          <% end %>
+          <br>
+ </div>
+<% end %>

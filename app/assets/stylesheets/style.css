@@ -1,0 +1,25 @@
+body {
+
+}
+.card-text{
+  padding: 15px;
+}
+.card {
+  height: 280px;
+
+}
+.card2 {
+  background: white;
+      padding: 10px;
+}
+
+.d-flex1 {
+position: absolute;
+bottom: 10px;
+}
+.card-img-top{
+  height: 175px;
+}
+
+
+/* plugin emmet */

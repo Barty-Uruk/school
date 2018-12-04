@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+    <main role="main">
+      <div class="album py-5 bg-light">
+
+            <div class="container">
+                <div class="row">
+          <% @user.courses.each do |course| %>
+                  <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                      <img class="card-img-top" src=<%= course.logo.url %> alt="Card image cap">
+                            <div class="card-text "><%= link_to course.description, course_path(course), :class => 'text-dark'  %>
+                            </div>
+                              <div class="card-body">
+                              </div>
+                    </div>
+                  </div>
+          <% end %>
+              </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-muted">
+    </footer>
