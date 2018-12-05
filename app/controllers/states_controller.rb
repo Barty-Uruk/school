@@ -6,6 +6,13 @@ class StatesController < ApplicationController
     @status = Status.find_by lesson: @lesson, user: @user
     @status.status = 1
     @status.save
+    if @state.nil?
+    if @user.experience.nil?
+      @user.experience = @lesson.experience
+    else
+      @user.experience = @user.experience + @lesson.experience
+    end
+    end
     if (@state.nil?)
       @statenew = State.new
       @statenew.lesson = @lesson
@@ -18,6 +25,7 @@ class StatesController < ApplicationController
       @state.value = params[:state_id]
       @state.save
     end
+    @user.save
      redirect_to profile_index_path
   end
   private
