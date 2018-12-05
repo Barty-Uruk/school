@@ -9,7 +9,7 @@
  <% end %>
  <br>
  <%# <%= select_tag(:status, options_for_select([['В процессе выполнения', 1], ['На проверке', 2]])) %>
-
+ 
  <%= form_for :status, url: statuses_path do |f| %>
    <%=  f.hidden_field :lesson, :value => @lesson.id %>
    <% if @status.nil? || @status.status == 1 %>
