@@ -1,0 +1,27 @@
+<% @courses.each do |course| %>
+ученики курса <%= course.title %> -
+<% course.users.each do |user| %>
+  <%= user.email %>,
+<% end %>
+<br>
+<% course.lessons.each do |lesson| %>
+  <% lesson.statuses.each do |status| %>
+  <% if status.status == 2 %>
+    пользователь
+    <strong><%= status.user.email %></strong>
+    отправил на проверку урок
+      <strong><%= link_to status.lesson.title, lesson_path(lesson)   %></strong>
+    <% @userLastDoc = status.user.user_docs.order(id: :desc).find_by lesson: lesson %>
+    <% if !@userLastDoc.nil? %>
+    <%= link_to "скачать работу", @userLastDoc.file.url, download: '',:class=> "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+    <%= form_for :state, url: states_path do |f| %>
+     <%= f.hidden_field :user_id, :value => status.user.id %>
+     <%= f.hidden_field :lesson_id, :value => status.lesson.id %>
+     <%= select_tag(:state_id, options_for_select([['1', 1], ['2', 2], ['3', 3]]))%>
+     <%= f.submit "Поставить оценку", :class=> "btn btn-sm btn-outline-secondary" %>
+    <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+<% end %>
