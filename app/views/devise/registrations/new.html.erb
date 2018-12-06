@@ -11,7 +11,14 @@
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, placeholder:"Email", autocomplete: "email", :class => 'form-control' %>
   </div>
-
+  <div class="col-md-5">
+    <%= f.label :"Имя" %><br />
+    <%= f.text_field :name, autofocus: true, :class => 'form-control' %>
+  </div>
+  <div class="col-md-5">
+    <%= f.label :"Фамилия" %><br />
+    <%= f.text_field :surname, autofocus: true, :class => 'form-control' %>
+  </div>
   <div class="col-md-5">
     <%= f.label :Пароль %>
     <% if @minimum_password_length %>
@@ -24,6 +31,7 @@
     <%= f.label :"Подтвердите пароль" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'form-control' %>
   </div>
+
   <br>
   <div class="col-md-5">
     <%= f.submit "Зарегистрироваться",:class => 'btn btn-lg btn-primary btn-block' %>

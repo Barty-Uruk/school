@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   enum status: { user: 0, admin: 1 }
-  has_and_belongs_to_many :courses
+  has_and_belongs_to_many :groups
   has_many :statuses
+  validates :name, presence: true
   has_many :user_docs
 end

@@ -1,8 +1,33 @@
-<% @courses.each do |course| %>
-ученики курса <%= course.title %> -
-<% course.users.each do |user| %>
-  <%= user.email %>,
+<% if current_user.rating.nil? %>
+  у вас еще нет рейтинга
+  <% else %>
+  Твой рейтинг :<%= current_user.rating %>
 <% end %>
+<br>
+<% if current_user.experience.nil? %>
+  у вас еще нет опыта
+  <% else %>
+  Твой опыт :<%= current_user.experience %>
+<% end %>
+<br>
+<% if current_user.admin? %>
+Состав групп :
+<% @groups.each do |gruop| %>
+  <%= gruop.name %> -
+  <% gruop.users.each do |user| %>
+      <%= user.name %>
+      <%= user.surname %>
+  <% end %>
+<% end %>
+<br>
+<% @courses.each do |course| %>
+Группы курса <%= link_to course.title, course_path(course) %> -
+<% course.groups.each do |gruop| %>
+  <%= gruop.name %>
+
+<% end %>
+
+
 <br>
 <% course.lessons.each do |lesson| %>
   <% lesson.statuses.each do |status| %>
@@ -15,13 +40,18 @@
     <% if !@userLastDoc.nil? %>
     <%= link_to "скачать работу", @userLastDoc.file.url, download: '',:class=> "btn btn-sm btn-outline-secondary" %>
     <% end %>
-    <%= form_for :state, url: states_path do |f| %>
-     <%= f.hidden_field :user_id, :value => status.user.id %>
-     <%= f.hidden_field :lesson_id, :value => status.lesson.id %>
-     <%= select_tag(:state_id, options_for_select([['1', 1], ['2', 2], ['3', 3]]))%>
-     <%= f.submit "Поставить оценку", :class=> "btn btn-sm btn-outline-secondary" %>
-    <% end %>
+      <%= form_for :state, url: states_path do |f| %>
+       <%= f.hidden_field :user_id, :value => status.user.id %>
+       <%= f.hidden_field :lesson_id, :value => status.lesson.id %>
+       <%= select_tag(:state_id, options_for_select([['1', 1], ['2', 2], ['3', 3]]))%>
+       <%= f.submit "Поставить оценку", :class=> "btn btn-sm btn-outline-secondary" %>
+      <% end %>
+        <%= form_for status do |f| %>
+        <%= f.hidden_field :lesson, :value => lesson.id %>
+        <%= f.submit "Отправить на доработку ", :class=> "btn btn-sm btn-outline-secondary" %>
+        <% end %>
     <% end %>
   <% end %>
+<% end %>
 <% end %>
 <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_05_091138) do
+ActiveRecord::Schema.define(version: 2018_12_06_123803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 2018_12_05_091138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "logo"
+  end
+
+  create_table "courses_groups", id: false, force: :cascade do |t|
+    t.bigint "course_id"
+    t.bigint "group_id"
+    t.index ["course_id"], name: "index_courses_groups_on_course_id"
+    t.index ["group_id"], name: "index_courses_groups_on_group_id"
   end
 
   create_table "courses_users", id: false, force: :cascade do |t|
@@ -38,14 +45,27 @@ ActiveRecord::Schema.define(version: 2018_12_05_091138) do
     t.index ["lesson_id"], name: "index_docs_on_lesson_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.index ["group_id"], name: "index_groups_users_on_group_id"
+    t.index ["user_id"], name: "index_groups_users_on_user_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "experience"
-    t.integer "required_experience"
+    t.integer "experience", default: 0
+    t.integer "required_experience", default: 0
     t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
@@ -88,12 +108,13 @@ ActiveRecord::Schema.define(version: 2018_12_05_091138) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer "status", default: 0
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.integer "experience"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.integer "experience", default: 0
+    t.bigint "group_id"
+    t.string "name", default: "", null: false
+    t.string "surname", default: "", null: false
+    t.integer "rating", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -114,4 +135,5 @@ ActiveRecord::Schema.define(version: 2018_12_05_091138) do
   add_foreign_key "statuses", "users"
   add_foreign_key "user_docs", "lessons"
   add_foreign_key "user_docs", "users"
+  add_foreign_key "users", "groups"
 end

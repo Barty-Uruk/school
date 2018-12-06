@@ -6,7 +6,6 @@
       <div class="album py-5 bg-light" height="100px">
         <div class="container" >
               <div class="row">
-
                     <% @course.lessons.order(:id).each do |lesson| %>
                       <% if current_user.experience.present? && !lesson.required_experience.nil? %>
                       <% if (current_user.experience >= lesson.required_experience ) %>
@@ -25,16 +24,13 @@
                                 <% else %>
                                 оценки пока нет
                                 <% end %>
-
                       </div>
                     </div>
                   </div>
                 </div>
-
           <% end %>
           <% end %>
   <% end %>
     </main>
-
     <footer class="text-muted">
     </footer>

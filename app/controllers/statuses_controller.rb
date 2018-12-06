@@ -17,6 +17,12 @@ class StatusesController < ApplicationController
     end
     redirect_to @lesson
   end
+  def update
+    @status = Status.find(params[:id])
+    @status.status = 1
+    @status.save
+    redirect_to profile_index_path
+  end
   private
   def status_params
     params.require(:status).permit(:lesson)

@@ -5,7 +5,8 @@
 
             <div class="container">
                 <div class="row">
-          <% @user.courses.each do |course| %>
+          <% @user.groups.each do |group| %>
+            <% group.courses.each do |course| %>
                   <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
                       <img class="card-img-top" src=<%= course.logo.url %> alt="Card image cap">
@@ -15,6 +16,7 @@
                               </div>
                     </div>
                   </div>
+          <% end %>
           <% end %>
               </div>
             </div>

@@ -21,7 +21,7 @@
 
        <span ><%= link_to "Курсы", allcourses_path,  :class => 'p-2 text-dark' %></span>
        <% if user_signed_in? %>
- <span >Здравствуйте, <%= link_to current_user.email, profile_index_path %></span>
+ <span >Здравствуйте, <%= link_to current_user.name, profile_index_path %></span>
 <span> <%= link_to 'Выйти', destroy_user_session_path, :method => :delete, :class => 'p-2 text-dark' %> </span>
 <% else %>
    <%= link_to 'Войти ', new_user_session_path, :class => 'p-2 text-dark' %> или <%= link_to ' Зарегистрироваться', new_user_registration_path, :class => 'p-2 text-dark' %>

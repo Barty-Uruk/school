@@ -19,6 +19,11 @@ class StatesController < ApplicationController
       @statenew.user = @user
       @statenew.value = params[:state_id]
       @statenew.save
+      if @user.rating.nil?
+        @user.rating = params[:state_id]
+      else
+        @user.rating = @user.rating + params[:state_id].to_i
+      end
     else
       @state.lesson = @lesson
       @state.user = @user
