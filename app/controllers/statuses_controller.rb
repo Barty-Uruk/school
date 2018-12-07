@@ -2,6 +2,10 @@ class StatusesController < ApplicationController
   def create
     @lesson = Lesson.find(status_params[:lesson])
     @status = Status.find_by lesson: @lesson, user: current_user
+    @alert = Alert.new
+    @alert.description = "Вы отправили на проверку урок #{@lesson.title}"
+    @alert.user = current_user
+    @alert.save
     if (@status.nil?)
       @statusnew = Status.new
       @statusnew.lesson = @lesson
@@ -11,7 +15,7 @@ class StatusesController < ApplicationController
     elsif (@status.status == 2)
       @status.status = 1
       @status.save
-    elsif  (@status.status = 1)
+    elsif  (@status.status == 1)
       @status.status = 2
       @status.save
     end
@@ -20,6 +24,10 @@ class StatusesController < ApplicationController
   def update
     @status = Status.find(params[:id])
     @status.status = 1
+    @alert = Alert.new
+    @alert.description = "Урок #{@status.lesson.title} отправлен на доработку"
+    @alert.user = @status.user
+    @alert.save
     @status.save
     redirect_to profile_index_path
   end

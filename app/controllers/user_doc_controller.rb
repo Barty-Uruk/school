@@ -3,9 +3,10 @@ class UserDocController < ApplicationController
 
   end
   def create
+  @lesson = Lesson.find(doc_params[:lesson_id])
     @doc = UserDoc.new(doc_params)
     @doc.user = current_user
-    @lesson = Lesson.find(doc_params[:lesson_id])
+
     @doc.lesson = @lesson
     @doc.save
     redirect_to @lesson

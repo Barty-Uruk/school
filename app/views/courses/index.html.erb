@@ -5,6 +5,16 @@
 
             <div class="container">
                 <div class="row">
+                  <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                      <% @defCours = @courses.find(1) %>
+                      <img class="card-img-top" src=<%= @defCours.logo.url %> alt="Card image cap">
+                            <div class="card-text "><%= link_to @defCours.description, course_path(@defCours), :class => 'text-dark'  %>
+                            </div>
+                              <div class="card-body">
+                              </div>
+                    </div>
+                  </div>
           <% @user.groups.each do |group| %>
             <% group.courses.each do |course| %>
                   <div class="col-md-4">

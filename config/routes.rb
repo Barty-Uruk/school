@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   root "home#index", as: "home"
   get "/home/about"  => "home#about", as: "about"
   get '/courses/index'  => 'courses#index', as: 'allcourses'
-  resources :courses, :statuses, :lessons, :user_doc, :profile, :states
+  resources :courses, :statuses, :lessons, :user_doc, :profile, :states, :groups
 
 end

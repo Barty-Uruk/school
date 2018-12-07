@@ -1,8 +1,6 @@
-<% if current_user.rating.nil? %>
-  у вас еще нет рейтинга
-  <% else %>
+
+<br>
   Твой рейтинг :<%= current_user.rating %>
-<% end %>
 <br>
 <% if current_user.experience.nil? %>
   у вас еще нет опыта
@@ -11,22 +9,18 @@
 <% end %>
 <br>
 <% if current_user.admin? %>
-Состав групп :
-<% @groups.each do |gruop| %>
-  <%= gruop.name %> -
-  <% gruop.users.each do |user| %>
-      <%= user.name %>
-      <%= user.surname %>
-  <% end %>
+
+<% @courses.each do |course| %>
+  <% if course.id != 1 %>
+  <br>
+    Группы курса <%= link_to course.title, course_path(course) %> -
+      <% course.groups.each do |group| %>
+      <%= link_to group.name, group_path(group) %>
+      <% end %>
+    <% end %>
 <% end %>
 <br>
 <% @courses.each do |course| %>
-Группы курса <%= link_to course.title, course_path(course) %> -
-<% course.groups.each do |gruop| %>
-  <%= gruop.name %>
-
-<% end %>
-
 
 <br>
 <% course.lessons.each do |lesson| %>
@@ -48,10 +42,15 @@
       <% end %>
         <%= form_for status do |f| %>
         <%= f.hidden_field :lesson, :value => lesson.id %>
+        <%= f.hidden_field :user_id, :value => status.user.id %>
         <%= f.submit "Отправить на доработку ", :class=> "btn btn-sm btn-outline-secondary" %>
         <% end %>
     <% end %>
   <% end %>
 <% end %>
 <% end %>
+<% end %>
+<% @alerts.order(id: :desc).each do |alert| %>
+  <%= alert.created_at.strftime("%e/%m/%y %H:%M")%> - <%= alert.description %>
+  <hr>
 <% end %>

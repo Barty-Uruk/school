@@ -1,0 +1,4 @@
+Список ваших групп: <br>
+<% current_user.groups.each do |group| %>
+   <%= link_to group.name, group_path(group) %>
+<% end %>

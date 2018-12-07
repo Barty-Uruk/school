@@ -8,4 +8,6 @@ class User < ApplicationRecord
   has_many :statuses
   validates :name, presence: true
   has_many :user_docs
+  has_many :alerts
+  has_many :states
 end

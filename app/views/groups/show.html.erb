@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="style1.css">
+		<title>Таблица с скругленными уголками</title>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>Ученик</th>
+					<th>Опыт</th>
+          <th>Рейтинг</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<% @group.users.order(rating: :desc).each do |user| %>
+					<td><%= user.name %> <%= user.surname %></td>
+					<td><%= user.experience %></td>
+					<td><%= user.rating %></td>
+          	</tbody>
+          <% end %>
+
+		</table>
+	</body>
+</html>
