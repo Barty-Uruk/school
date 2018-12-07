@@ -11,7 +11,9 @@ class StatesController < ApplicationController
     @alert.description = "Вам была выставлена оценка #{params[:state_id]} за урок #{@lesson.title}"
     @alert.user = @user
     @alert.save
+    @oldExp = 0
     if @state.nil?
+
     if @user.experience.nil?
       @user.experience = @lesson.experience
     else
